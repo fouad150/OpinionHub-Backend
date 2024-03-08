@@ -19,7 +19,7 @@ public class Publication {
     private Long id;
     private String content;
     private String publicationType;
-    private String votes;
+    private String votes;   
     @ManyToOne
     private User user;
 }

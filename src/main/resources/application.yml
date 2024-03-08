@@ -14,7 +14,7 @@ spring:
       enabled: always
   # Database Configuration
   datasource:
-    url: jdbc:mysql://localhost:3306/TaskFlow?createDatabaseIfNotExist=true
+    url: jdbc:mysql://localhost:3306/OpinionHub?createDatabaseIfNotExist=true
     username: root
     password:
   jpa:
@@ -27,5 +27,13 @@ spring:
     change-log: db/master.xml
 
 application:
+  security:
+    jwt:
+      secret-key: 586B633834416E396D7436753879382F423F4428482B4C6250655367566B5970
+      expiration: 900000 #  15 min in ms
+      cookie-name: jwt-cookie
+
+
+
 
 
