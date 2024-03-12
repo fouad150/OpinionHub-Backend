@@ -6,7 +6,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
 
 @Entity
 @Builder
@@ -17,9 +16,9 @@ public class Publication {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String content;
-    private String publicationType;
-    private String votes;   
+    private String text;
+    private String image;
+    private Integer likes;
     @ManyToOne
     private User user;
 }

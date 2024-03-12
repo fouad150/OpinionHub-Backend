@@ -26,12 +26,22 @@ spring:
     enabled: false
     change-log: db/master.xml
 
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 10MB
+      max-request-size: 10MB
+
 application:
   security:
     jwt:
       secret-key: 586B633834416E396D7436753879382F423F4428482B4C6250655367566B5970
       expiration: 900000 #  15 min in ms
       cookie-name: jwt-cookie
+
+upload:
+  folder: ./uploads
+
 
 
 

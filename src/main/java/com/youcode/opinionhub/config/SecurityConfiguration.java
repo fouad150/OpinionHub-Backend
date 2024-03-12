@@ -48,12 +48,12 @@ public class SecurityConfiguration {
         http
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .csrf(AbstractHttpConfigurer::disable)
-                .exceptionHandling(exception -> exception
+               /* .exceptionHandling(exception -> exception
                         .authenticationEntryPoint(unauthorizedEntryPoint)
-                        .accessDeniedHandler(accessDeniedHandler))
-                .authorizeHttpRequests(request ->
+                        .accessDeniedHandler(accessDeniedHandler))*/
+                /*.authorizeHttpRequests(request ->
                         request.requestMatchers("/api/v1/auth/**").permitAll()
-                                .requestMatchers( "/api/v1/resource").authenticated())
+                                .requestMatchers( "/api/v1/resource").authenticated())*/
                 .sessionManagement(manager -> manager.sessionCreationPolicy(STATELESS))
                 .authenticationProvider(authenticationProvider).addFilterBefore(
                         jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);

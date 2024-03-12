@@ -19,7 +19,7 @@ import java.time.Instant;
 public class CustomAccessDeniedHandler implements AccessDeniedHandler {
     @Override
     public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException accessDeniedException) throws IOException {
-        log.error("Access denied error: {}", accessDeniedException.getMessage());
+/*        log.error("Access denied error: {}", accessDeniedException.getMessage());
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
         response.setStatus(HttpServletResponse.SC_FORBIDDEN);
 
@@ -35,6 +35,6 @@ public class CustomAccessDeniedHandler implements AccessDeniedHandler {
         mapper.registerModule(new JavaTimeModule());
         // ask Jackson to serialize dates as strings in the ISO 8601 format
         mapper.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS,false);
-        mapper.writeValue(response.getOutputStream(), body);
+        mapper.writeValue(response.getOutputStream(), body);*/
     }
 }
