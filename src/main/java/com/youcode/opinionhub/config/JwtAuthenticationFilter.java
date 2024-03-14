@@ -35,7 +35,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         String jwt = jwtService.getJwtFromCookies(request);
         final String authHeader = request.getHeader("Authorization");
-
+        System.out.println("jwt: "+ jwt);
+        System.out.println("start with bearer: "+authHeader);
         if((jwt == null && (authHeader ==  null || !authHeader.startsWith("Bearer "))) || request.getRequestURI().contains("/auth")){
             filterChain.doFilter(request, response);
             return;
@@ -71,8 +72,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 context.setAuthentication(authToken);
 
                 SecurityContextHolder.setContext(context);
-
-                System.out.println("context holder: "+SecurityContextHolder.getContext().getAuthentication().getAuthorities());
+                System.out.println("context holder: "+ SecurityContextHolder.getContext());
             }
         }
         filterChain.doFilter(request,response);

@@ -3,12 +3,12 @@ package com.youcode.opinionhub.Service.impl;
 import com.youcode.opinionhub.Entity.Publication;
 import com.youcode.opinionhub.Entity.User;
 import com.youcode.opinionhub.Repository.PublicationRepository;
+import com.youcode.opinionhub.ResponseDTO.PublicationResponseDTO;
 import com.youcode.opinionhub.Service.PublicationService;
+import com.youcode.opinionhub.convertor.PublicationConvertor;
 import org.apache.coyote.BadRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -22,6 +22,8 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -34,6 +36,18 @@ public class PublicationServiceImpl implements PublicationService {
 
     @Value("${upload.folder}")
     private String uploadFolder;
+
+    @Override
+    public List<PublicationResponseDTO> getPublications() throws IOException {
+        List<Publication> publications = publicationRepository.findAll();
+        List<PublicationResponseDTO> publicationResponseDTOList = new ArrayList<>();
+        for (Publication publication : publications) {
+            PublicationResponseDTO publicationResponseDTO = PublicationConvertor.convertToPublicationResponseDTO(publication);
+            publicationResponseDTOList.add(publicationResponseDTO);
+        }
+
+        return publicationResponseDTOList;
+    }
 
     public Publication addPublication(String text, MultipartFile image) throws IOException {
         if (text == null || text.isEmpty() || image == null || image.isEmpty()) {
@@ -58,4 +72,5 @@ public class PublicationServiceImpl implements PublicationService {
            throw new IOException("failed to save the image");
         }
     }
+
 }

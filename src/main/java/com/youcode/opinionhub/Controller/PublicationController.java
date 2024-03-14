@@ -1,7 +1,9 @@
 package com.youcode.opinionhub.Controller;
 
 import com.youcode.opinionhub.Entity.Publication;
+import com.youcode.opinionhub.ResponseDTO.PublicationResponseDTO;
 import com.youcode.opinionhub.Service.PublicationService;
+import com.youcode.opinionhub.convertor.PublicationConvertor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.List;
 
 
 @RestController
@@ -23,19 +26,21 @@ public class PublicationController {
 
 
     @PostMapping()
-/*
-    @PreAuthorize("hasRole('User')")
-*/
+    @PreAuthorize("hasRole('USER')")
     public ResponseEntity<?> addPost(@RequestParam("text") String text, @RequestParam("image") MultipartFile image) throws IOException {
-        Publication publication = publicationService.addPublication(text,image);
-        System.out.println(publication);
-        return ResponseEntity.ok("good");
+        if (text == null || text.isEmpty()) {
+            text = " ";
+        }
+        Publication addedPublication = publicationService.addPublication(text,image);
+        PublicationResponseDTO publication = PublicationConvertor.convertToPublicationResponseDTO(addedPublication);
+        return new ResponseEntity<>(publication,HttpStatus.OK);
     }
 
 
     @GetMapping()
-    @PreAuthorize("hasRole('User')")
-    public ResponseEntity<?> getPublications(){
-        return new ResponseEntity<>("publications", HttpStatus.OK);
+    @PreAuthorize("hasRole('USER')")
+    public ResponseEntity<?> getPublications() throws IOException {
+        List<PublicationResponseDTO> publications=publicationService.getPublications();
+        return new ResponseEntity<>(publications, HttpStatus.OK);
     }
 }

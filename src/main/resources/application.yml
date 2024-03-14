@@ -40,7 +40,7 @@ application:
       cookie-name: jwt-cookie
 
 upload:
-  folder: ./uploads
+  folder: ./src/main/resources/uploads
 
 
 
