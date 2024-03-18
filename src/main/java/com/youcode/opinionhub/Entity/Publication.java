@@ -6,6 +6,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 
 @Entity
 @Builder
@@ -19,6 +21,8 @@ public class Publication {
     private String text;
     private String image;
     private Integer likes;
-    @ManyToOne
+    @ManyToOne()
     private User user;
+    /*@OneToMany(fetch = FetchType.EAGER)
+    private List<Reaction> reactions;*/
 }

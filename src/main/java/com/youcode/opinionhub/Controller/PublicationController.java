@@ -1,6 +1,7 @@
 package com.youcode.opinionhub.Controller;
 
 import com.youcode.opinionhub.Entity.Publication;
+import com.youcode.opinionhub.Repository.PublicationRepository;
 import com.youcode.opinionhub.ResponseDTO.PublicationResponseDTO;
 import com.youcode.opinionhub.Service.PublicationService;
 import com.youcode.opinionhub.convertor.PublicationConvertor;
@@ -25,6 +26,7 @@ public class PublicationController {
     private PublicationService publicationService;
 
 
+
     @PostMapping()
     @PreAuthorize("hasRole('USER')")
     public ResponseEntity<?> addPost(@RequestParam("text") String text, @RequestParam("image") MultipartFile image) throws IOException {
@@ -40,7 +42,11 @@ public class PublicationController {
     @GetMapping()
     @PreAuthorize("hasRole('USER')")
     public ResponseEntity<?> getPublications() throws IOException {
-        List<PublicationResponseDTO> publications=publicationService.getPublications();
+/*
+        return new ResponseEntity<>(this.publicationService.findAll(),HttpStatus.OK);
+*/
+        List<Object> publications=publicationService.getPublications();
         return new ResponseEntity<>(publications, HttpStatus.OK);
+
     }
 }

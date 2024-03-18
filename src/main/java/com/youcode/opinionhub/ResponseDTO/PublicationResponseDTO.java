@@ -15,6 +15,6 @@ public class PublicationResponseDTO {
     private String base64Image;
     private Integer likes;
 
-    private String userName;
+    private String usedName;
     private String userEmail;
 }

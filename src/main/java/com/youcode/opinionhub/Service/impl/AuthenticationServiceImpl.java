@@ -32,7 +32,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         System.out.println("register function works");
         var user = User.builder()
                 .name(request.getName())
-                .username(request.getUsername())
+                .usedName(request.getUsedName())
                 .email(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword()))
                 .role(Role.USER)

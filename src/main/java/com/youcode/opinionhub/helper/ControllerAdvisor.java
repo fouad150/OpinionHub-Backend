@@ -1,6 +1,7 @@
 package com.youcode.opinionhub.helper;
 
 import com.youcode.opinionhub.exception.AlreadyExistsException;
+import com.youcode.opinionhub.exception.DoesNotExistException;
 import org.apache.coyote.BadRequestException;
 import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.http.HttpStatus;
@@ -16,6 +17,15 @@ import java.util.Map;
 public class ControllerAdvisor extends ResponseEntityExceptionHandler {
     @ExceptionHandler(AlreadyExistsException.class)
     public ResponseEntity<Object> handleAlreadyExistsException(AlreadyExistsException ex) {
+
+        Map<String,String> body = new HashMap<>();
+        body.put("message", ex.getMessage());
+
+        return new ResponseEntity<>(body, HttpStatus.CONFLICT);
+    }
+
+    @ExceptionHandler(DoesNotExistException.class)
+    public ResponseEntity<Object> handleAlreadyExistsException(DoesNotExistException ex) {
 
         Map<String,String> body = new HashMap<>();
         body.put("message", ex.getMessage());

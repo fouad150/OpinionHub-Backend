@@ -1,8 +1,10 @@
 package com.youcode.opinionhub.Service.impl;
 
 import com.youcode.opinionhub.Entity.Publication;
+import com.youcode.opinionhub.Entity.Reaction;
 import com.youcode.opinionhub.Entity.User;
 import com.youcode.opinionhub.Repository.PublicationRepository;
+import com.youcode.opinionhub.Repository.ReactionRepository;
 import com.youcode.opinionhub.ResponseDTO.PublicationResponseDTO;
 import com.youcode.opinionhub.Service.PublicationService;
 import com.youcode.opinionhub.convertor.PublicationConvertor;
@@ -32,21 +34,25 @@ public class PublicationServiceImpl implements PublicationService {
     @Autowired
     private PublicationRepository publicationRepository;
     @Autowired
+    private ReactionRepository reactionRepository;
+    @Autowired
     private UserDetailsService userDetailsService;
 
     @Value("${upload.folder}")
     private String uploadFolder;
 
     @Override
-    public List<PublicationResponseDTO> getPublications() throws IOException {
-        List<Publication> publications = publicationRepository.findAll();
-        List<PublicationResponseDTO> publicationResponseDTOList = new ArrayList<>();
-        for (Publication publication : publications) {
-            PublicationResponseDTO publicationResponseDTO = PublicationConvertor.convertToPublicationResponseDTO(publication);
-            publicationResponseDTOList.add(publicationResponseDTO);
+    public List<Object> getPublications() throws IOException {
+        List<Publication> foundPublications = publicationRepository.findAll();
+        List<PublicationResponseDTO> publications = new ArrayList<>();
+        for (Publication foundPublication : foundPublications) {
+            PublicationResponseDTO publication = PublicationConvertor.convertToPublicationResponseDTO(foundPublication);
+            publications.add(publication);
         }
 
-        return publicationResponseDTOList;
+        List<Reaction> reactions=this.reactionRepository.findAll();
+
+        return List.of(publications,reactions);
     }
 
     public Publication addPublication(String text, MultipartFile image) throws IOException {
@@ -73,4 +79,11 @@ public class PublicationServiceImpl implements PublicationService {
         }
     }
 
+    @Override
+    public List<Reaction>  findAll(){
+/*
+        List<Publication> publications = this.publicationRepository.findAllWithReactions();
+*/
+       return this.reactionRepository.findAll();
+    }
 }

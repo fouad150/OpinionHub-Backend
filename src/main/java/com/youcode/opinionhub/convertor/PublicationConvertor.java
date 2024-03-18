@@ -18,7 +18,7 @@ public class PublicationConvertor {
                 .id(publication.getId())
                 .text(publication.getText())
                 .likes(publication.getLikes())
-                .userName(publication.getUser().getusername())
+                .usedName(publication.getUser().getUsedName())
                 .userEmail(publication.getUser().getEmail())
                 .build();
 

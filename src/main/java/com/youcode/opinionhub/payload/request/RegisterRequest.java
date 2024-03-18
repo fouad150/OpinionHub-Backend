@@ -20,7 +20,7 @@ public class RegisterRequest {
     @NotBlank(message = "firstname is required")
     private String name;
     @NotBlank(message = "lastname is required")
-    private String username;
+    private String usedName;
     @NotBlank(message = "email is required")
     @Email(message = "email format is not valid")
     private String email;
