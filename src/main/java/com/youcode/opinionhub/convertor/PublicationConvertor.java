@@ -20,6 +20,7 @@ public class PublicationConvertor {
                 .likes(publication.getLikes())
                 .usedName(publication.getUser().getUsedName())
                 .userEmail(publication.getUser().getEmail())
+                .comments(publication.getComments())
                 .build();
 
         return loadImageForPublication(publicationResponseDTO,publication);

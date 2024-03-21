@@ -1,14 +1,13 @@
 package com.youcode.opinionhub.Entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Entity
 @Builder
 @Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class Comment {
@@ -18,6 +17,6 @@ public class Comment {
     private String content;
     @ManyToOne
     private User user;
-    @ManyToOne
-    private Publication publication;
+    /*@ManyToOne
+    private Publication publication;*/
 }

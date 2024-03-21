@@ -1,10 +1,13 @@
 package com.youcode.opinionhub.ResponseDTO;
 
+import com.youcode.opinionhub.Entity.Comment;
 import com.youcode.opinionhub.Entity.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.Setter;
+
+import java.util.List;
 
 @AllArgsConstructor
 @Builder
@@ -17,4 +20,5 @@ public class PublicationResponseDTO {
 
     private String usedName;
     private String userEmail;
+    private List<Comment> comments;
 }

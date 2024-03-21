@@ -39,6 +39,8 @@ application:
 
 upload:
   folder: ./src/main/resources/uploads
+  profile: ./src/main/resources/profiles
+
 
 
 

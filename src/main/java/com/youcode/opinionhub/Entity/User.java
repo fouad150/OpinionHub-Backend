@@ -8,6 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Collection;
 
@@ -24,6 +25,8 @@ public class User implements UserDetails {
     private String usedName;
     private String email;
     private String password;
+
+    private String photoPath;
 
     @Enumerated(EnumType.STRING)
     private Role role;

@@ -25,4 +25,7 @@ public class Publication {
     private User user;
     /*@OneToMany(fetch = FetchType.EAGER)
     private List<Reaction> reactions;*/
+
+    @OneToMany
+    private List<Comment> comments;
 }
