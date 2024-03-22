@@ -25,8 +25,6 @@ public class PublicationController {
     @Autowired
     private PublicationService publicationService;
 
-
-
     @PostMapping()
     @PreAuthorize("hasRole('USER')")
     public ResponseEntity<?> addPost(@RequestParam("text") String text, @RequestParam("image") MultipartFile image) throws IOException {

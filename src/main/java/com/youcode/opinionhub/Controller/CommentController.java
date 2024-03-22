@@ -3,6 +3,7 @@ package com.youcode.opinionhub.Controller;
 import com.youcode.opinionhub.DTO.CommentDTO;
 import com.youcode.opinionhub.Entity.Comment;
 import com.youcode.opinionhub.Service.CommentService;
+import org.apache.coyote.BadRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,7 +22,7 @@ public class CommentController {
 
     @PostMapping()
     @PreAuthorize("hasRole('USER')")
-    public ResponseEntity<Comment>  addComment(@RequestBody CommentDTO commentDTO){
+    public ResponseEntity<Comment>  addComment(@RequestBody CommentDTO commentDTO) throws BadRequestException {
 
         Comment comment= commentService.addComment(commentDTO);
         return new ResponseEntity<>(comment, HttpStatus.OK);

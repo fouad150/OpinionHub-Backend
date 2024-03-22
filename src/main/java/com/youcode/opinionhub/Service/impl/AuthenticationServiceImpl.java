@@ -27,6 +27,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Base64;
 import java.util.UUID;
 
 
@@ -45,7 +46,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     public AuthenticationResponse register(RegisterRequest request, MultipartFile photo) throws IOException {
 
         if (photo == null) {
-            throw new BadRequestException("profile is required.");
+            throw new BadRequestException("photo is required.");
         }
 
         try {
@@ -76,9 +77,15 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                     .map(SimpleGrantedAuthority::getAuthority)
                     .toList();
 
+            Path imagePath = Paths.get(user.getPhotoPath());
+            byte[] imageBytes = Files.readAllBytes(imagePath);
+            String base64Profile = Base64.getEncoder().encodeToString(imageBytes);
+
             return AuthenticationResponse.builder()
                     .accessToken(jwt)
                     .email(user.getEmail())
+                    .usedName(user.getUsedName())
+                    .base64Profile(base64Profile)
                     .id(user.getId())
                     .roles(roles)
                     .tokenType( TokenType.BEARER.name())
@@ -91,7 +98,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     }
 
     @Override
-    public AuthenticationResponse authenticate(AuthenticationRequest request) {
+    public AuthenticationResponse authenticate(AuthenticationRequest request) throws IOException {
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(request.getEmail(),request.getPassword()));
 
@@ -101,10 +108,17 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                 .map(SimpleGrantedAuthority::getAuthority)
                 .toList();
         var jwt = jwtService.generateToken(user);
+
+        Path imagePath = Paths.get(user.getPhotoPath());
+        byte[] imageBytes = Files.readAllBytes(imagePath);
+        String base64Profile = Base64.getEncoder().encodeToString(imageBytes);
+
         return AuthenticationResponse.builder()
                 .accessToken(jwt)
                 .roles(roles)
                 .email(user.getEmail())
+                .usedName(user.getUsedName())
+                .base64Profile(base64Profile)
                 .id(user.getId())
                 .tokenType( TokenType.BEARER.name())
                 .build();

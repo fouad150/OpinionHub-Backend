@@ -34,6 +34,7 @@ public class AuthenticationController {
                                                            @RequestParam("email") String email,
                                                            @RequestParam("password") String password,
                                                            @RequestParam("photo") MultipartFile photo) throws IOException {
+        System.out.println("register works");
         RegisterRequest registerRequest=new RegisterRequest(name,usedName,email,password, Role.USER);
         AuthenticationResponse authenticationResponse = authenticationService.register(registerRequest,photo);
         return ResponseEntity.ok()
@@ -41,7 +42,7 @@ public class AuthenticationController {
     }
 
     @PostMapping("/authenticate")
-    public ResponseEntity<AuthenticationResponse> authenticate(@RequestBody AuthenticationRequest request) {
+    public ResponseEntity<AuthenticationResponse> authenticate(@RequestBody AuthenticationRequest request) throws IOException {
         AuthenticationResponse authenticationResponse = authenticationService.authenticate(request);
         return ResponseEntity.ok()
                 .body(authenticationResponse);

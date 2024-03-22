@@ -1,6 +1,7 @@
 package com.youcode.opinionhub.convertor;
 
 import com.youcode.opinionhub.Entity.Publication;
+import com.youcode.opinionhub.Entity.User;
 import com.youcode.opinionhub.ResponseDTO.PublicationResponseDTO;
 
 import java.io.IOException;
@@ -23,7 +24,8 @@ public class PublicationConvertor {
                 .comments(publication.getComments())
                 .build();
 
-        return loadImageForPublication(publicationResponseDTO,publication);
+        PublicationResponseDTO publicationResponseDTO1= loadImageForPublication(publicationResponseDTO,publication);
+        return loadProfileForPublication(publicationResponseDTO1,publication.getUser().getPhotoPath());
     }
 
     private static PublicationResponseDTO loadImageForPublication(PublicationResponseDTO publicationResponseDTO, Publication publication) throws IOException {
@@ -31,6 +33,14 @@ public class PublicationConvertor {
         byte[] imageBytes = Files.readAllBytes(imagePath);
         String base64Image = Base64.getEncoder().encodeToString(imageBytes);
         publicationResponseDTO.setBase64Image(base64Image);
+        return publicationResponseDTO;
+    }
+
+    private static PublicationResponseDTO loadProfileForPublication(PublicationResponseDTO publicationResponseDTO, String profilePath) throws IOException {
+        Path imagePath = Paths.get(profilePath);
+        byte[] imageBytes = Files.readAllBytes(imagePath);
+        String base64Image = Base64.getEncoder().encodeToString(imageBytes);
+        publicationResponseDTO.setBase64Profile(base64Image);
         return publicationResponseDTO;
     }
 }

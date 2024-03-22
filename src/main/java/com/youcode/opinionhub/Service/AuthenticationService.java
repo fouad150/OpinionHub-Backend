@@ -12,5 +12,5 @@ public interface AuthenticationService {
 
     AuthenticationResponse register(RegisterRequest request, MultipartFile photo) throws IOException;
 
-    AuthenticationResponse authenticate(AuthenticationRequest request);
+    AuthenticationResponse authenticate(AuthenticationRequest request) throws IOException;
 }

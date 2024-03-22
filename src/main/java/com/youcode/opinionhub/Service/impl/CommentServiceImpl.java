@@ -9,6 +9,7 @@ import com.youcode.opinionhub.Repository.PublicationRepository;
 import com.youcode.opinionhub.Repository.UserRepository;
 import com.youcode.opinionhub.Service.CommentService;
 import com.youcode.opinionhub.exception.DoesNotExistException;
+import org.apache.coyote.BadRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,7 +27,12 @@ public class CommentServiceImpl implements CommentService {
     private UserRepository userRepository;
 
     @Override
-    public Comment addComment(CommentDTO commentDTO){
+    public Comment addComment(CommentDTO commentDTO) throws BadRequestException {
+
+        String content=commentDTO.getContent();
+        if(content==null || content.isEmpty()|| content.isBlank()){
+            throw new BadRequestException("comment can't be blank");
+        }
 
         Optional<Publication> publicationOptional = publicationRepository.findById(commentDTO.getPublicationId());
         Optional<User> userOptional = userRepository.findByEmail(commentDTO.getUserEmail());

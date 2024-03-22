@@ -20,5 +20,6 @@ public class PublicationResponseDTO {
 
     private String usedName;
     private String userEmail;
+    private String base64Profile;
     private List<Comment> comments;
 }
