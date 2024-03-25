@@ -1,5 +1,6 @@
 package com.youcode.opinionhub.ResponseDTO;
 
+import com.youcode.opinionhub.DTO.CommentResponseDTO;
 import com.youcode.opinionhub.Entity.Comment;
 import com.youcode.opinionhub.Entity.User;
 import lombok.AllArgsConstructor;
@@ -21,5 +22,5 @@ public class PublicationResponseDTO {
     private String usedName;
     private String userEmail;
     private String base64Profile;
-    private List<Comment> comments;
+    private List<CommentResponseDTO> comments;
 }

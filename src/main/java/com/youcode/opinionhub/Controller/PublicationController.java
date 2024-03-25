@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 
 
@@ -46,5 +47,15 @@ public class PublicationController {
         List<Object> publications=publicationService.getPublications();
         return new ResponseEntity<>(publications, HttpStatus.OK);
 
+    }
+
+    @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('USER')")
+    public ResponseEntity<?> deletePublication(@PathVariable("id") Long id){
+        System.out.println("delete method works"+id);
+        this.publicationService.deletePublicationById(id);
+        HashMap<String,String> hashMap= new HashMap<>();
+        hashMap.put("message","post was deleted successfully");
+        return new  ResponseEntity<>(hashMap, HttpStatus.OK);
     }
 }

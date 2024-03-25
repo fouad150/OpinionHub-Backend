@@ -10,7 +10,7 @@ import java.util.Optional;
 
 @Repository
 public interface ReactionRepository extends JpaRepository<Reaction,Long> {
-
-
     Optional<Reaction> findByPublicationAndUser(Publication publication, User user);
+
+    void deleteByPublicationId(Long publicationId);
 }

@@ -36,28 +36,20 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         String jwt = jwtService.getJwtFromCookies(request);
         final String authHeader = request.getHeader("Authorization");
         System.out.println("jwt: "+ jwt);
-        System.out.println("start with bearer: "+authHeader);
         if((jwt == null && (authHeader ==  null || !authHeader.startsWith("Bearer "))) || request.getRequestURI().contains("/auth")){
             filterChain.doFilter(request, response);
             return;
         }
-        System.out.println(1);
 
         // If the JWT is not in the cookies but in the "Authorization" header
         if (jwt == null && authHeader.startsWith("Bearer ")) {
             jwt = authHeader.substring(7); // after "Bearer "
         }
-        System.out.println(2);
 
         final String userEmail =jwtService.extractUserName(jwt);
 
-        System.out.println(userEmail);
-        System.out.println("..."+SecurityContextHolder.getContext().getAuthentication()==null);
-        System.out.println("---"+SecurityContextHolder.getContext().getAuthentication());
         if(StringUtils.isNotEmpty(userEmail) && SecurityContextHolder.getContext().getAuthentication() == null){
-            System.out.println(3);
             UserDetails userDetails = this.userDetailsService.loadUserByUsername(userEmail);
-            System.out.println("user:"+userDetails);
             if(jwtService.isTokenValid(jwt, userDetails)){
 
                 SecurityContext context = SecurityContextHolder.createEmptyContext();

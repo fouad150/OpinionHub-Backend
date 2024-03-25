@@ -14,4 +14,6 @@ public interface PublicationService {
     public Publication addPublication(String text, MultipartFile image) throws IOException;
 
     List<Reaction>  findAll();
+
+    void deletePublicationById(Long id);
 }

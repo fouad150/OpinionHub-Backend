@@ -8,9 +8,9 @@ import lombok.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class CommentResponseDTO {
-    private Long id;
-    private String content;
+public class UserResponseDTO {
+    private String name;
     private String usedName;
+    private String email;
     private String base64Profile;
 }
