@@ -9,17 +9,21 @@ server:
 spring:
 
   #to enable colors when you run your app outside intellij
-
+  output:
+    ansi:
+      enabled: always
   # Database Configuration
   datasource:
-    url: jdbc:mysql://localhost:3306/OpinionHub?createDatabaseIfNotExist=true
-    username: root
-    password:
+    url: jdbc:mysql://database:3307/OpinionHub?createDatabaseIfNotExist=true
+    username: fouad
+    password: fouad
   jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL8Dialect
+        ddl-auto: update
     show-sql: true
-    hibernate:
-      dialect: org.hibernate.dialect.MySQL5Dialect
-      ddl-auto: update
+
   liquibase:
     enabled: false
     change-log: db/master.xml
